@@ -1,0 +1,52 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400&family=Roboto:wght@400;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+#root {
+  background-color: var(--color-black-3);
+  min-height: 100vh;
+  min-width: 100vw;
+}
+
+html, body {
+  max-width: 100%;
+  --type-primary: 'Nunito', 'Arial', 'sans-serif';
+  --type-secondary: 'Roboto', 'Georgia';
+  --color-black-0: #000;
+  --color-black-1: #202020;
+  --color-black-2: #333533;
+  --color-black-3: #D6D6D6;
+  --color-yellow-0: #FFD100;
+  --color-yellow-1: #FFEE32;
+}
+
+h1, h2, h3 {
+  font-family: var(--type-primary);
+}
+
+p, span {
+  font-family: var(--type-secondary);
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+button, input {
+  font-size: 1rem;
+  display: block;
+  font-family: var(--type-secondary);
+}
+
+button {
+  cursor: pointer;
+}
+
+a {
+  color: var(--color-black-0);
+}
