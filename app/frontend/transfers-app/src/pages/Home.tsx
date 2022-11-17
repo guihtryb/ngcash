@@ -1,6 +1,8 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import Button from '../components/Button';
 import Form from '../components/Form';
+import Header from '../components/Header';
 import Input from '../components/Input';
 import { InputOnChange } from '../types';
 
@@ -28,22 +30,26 @@ const transferInputs = [
 ];
 
 export default function Home() {
+  const [usernameText, setUsernameText] = React.useState('');
+  const [userBalance, setUserBalance] = React.useState(0.0);
+
+  const getUserUsername = async () => setUsernameText('Guih');
+  const getUserBalance = async () => setUserBalance(0.0);
+
+  React.useEffect(() => {
+    getUserUsername();
+    getUserBalance();
+  }, []);
+
   const handleChange = ({ target }: React.ChangeEvent<HTMLInputElement>) => target;
+
+  const handleSubmit = (e: React.FormEvent, formsData: {[field: string]: string}) => {
+    e.preventDefault();
+  };
 
   return (
     <div>
-      <header>
-        <span>
-          Transfers App
-        </span>
-        <span data-testid="user-username-info">
-          Olá, username!
-        </span>
-        <span data-testid="user-balance-info">
-          Balance
-        </span>
-        <Button testId="button-log-out" text="Sair" handleClick={() => null} type="button" />
-      </header>
+      <Header usernameText={usernameText} userBalance={userBalance} />
 
       <main>
         <section>
@@ -54,6 +60,7 @@ export default function Home() {
             btnTestId="button-submit-transfer"
             btnText="Transferir"
             inputs={transferInputs}
+            handleSubmit={handleSubmit}
           />
         </section>
 
