@@ -33,12 +33,12 @@ export default function Login() {
         handleSubmit={handleSubmit}
         inputs={loginInputs}
         btnTestId="button-login"
-        btnText="Log In"
+        btnText="Entrar"
       />
       <p>
         Ainda não possui uma conta?
         {' '}
-        <Link to="/register">Registre-se</Link>
+        <Link to="/register">Registre-se.</Link>
       </p>
     </main>
   );
