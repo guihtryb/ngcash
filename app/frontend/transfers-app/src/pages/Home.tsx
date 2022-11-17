@@ -62,27 +62,31 @@ export default function Home() {
         />
 
         <table>
-          <tr>
-            <th>id</th>
-            <th>debitedAccount</th>
-            <th>creditedAccount</th>
-            <th>value</th>
-            <th>createdAt</th>
-          </tr>
-          <tr>
-            <td>0</td>
-            <td>currentUser</td>
-            <td>creditedUser</td>
-            <td>10.00</td>
-            <td>dd/mm/yyyy</td>
-          </tr>
-          <tr>
-            <td>1</td>
-            <td>currentUser</td>
-            <td>creditedUser</td>
-            <td>25.00</td>
-            <td>dd/mm/yyyy</td>
-          </tr>
+          <thead>
+            <tr>
+              <th>id</th>
+              <th>debitedAccount</th>
+              <th>creditedAccount</th>
+              <th>value</th>
+              <th>createdAt</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>0</td>
+              <td>currentUser</td>
+              <td>creditedUser</td>
+              <td>10.00</td>
+              <td>dd/mm/yyyy</td>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td>currentUser</td>
+              <td>creditedUser</td>
+              <td>25.00</td>
+              <td>dd/mm/yyyy</td>
+            </tr>
+          </tbody>
         </table>
 
       </main>
