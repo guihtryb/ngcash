@@ -33,10 +33,10 @@ export default function Home() {
         <span>
           Transfers App
         </span>
-        <span>
+        <span data-testid="user-username-info">
           Olá, username!
         </span>
-        <span>
+        <span data-testid="user-balance-info">
           Balance
         </span>
         <Button testId="button-log-out" text="Sair" handleClick={() => null} type="button" />
@@ -45,8 +45,9 @@ export default function Home() {
       <main>
         <section>
           <h1>Realize transferências Instantaneamente!</h1>
-          <Button testId="button-show-transfer-modal" text="Transferir" type="button" />
+          <Button testId="button-show-transfer-form" text="Transferir" type="button" />
           <Form
+            testId="form-transfer"
             btnTestId="button-submit-transfer"
             btnText="Transferir"
             handleSubmit={handleSubmit}
@@ -64,7 +65,7 @@ export default function Home() {
             type="text"
             labelText="Filtrar transferência por data"
           />
-          <table>
+          <table data-testid="table-transfers">
             <thead>
               <tr>
                 <th data-testid="th-id">id</th>
@@ -75,7 +76,7 @@ export default function Home() {
               </tr>
             </thead>
 
-            <tbody>
+            <tbody data-testid="transfers">
               <tr>
                 <td>0</td>
                 <td>currentUser</td>

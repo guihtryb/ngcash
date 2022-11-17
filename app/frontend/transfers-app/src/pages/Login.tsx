@@ -30,6 +30,7 @@ export default function Login() {
     <main>
       <h1>Login</h1>
       <Form
+        testId="form-login"
         btnTestId="button-login"
         btnText="Entrar"
         handleSubmit={handleSubmit}
@@ -38,7 +39,7 @@ export default function Login() {
       <p>
         Ainda não possui uma conta?
         {' '}
-        <Link to="/register">Registre-se.</Link>
+        <Link to="/register" data-testid="link-register">Registre-se.</Link>
       </p>
     </main>
   );

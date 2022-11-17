@@ -3,17 +3,18 @@ import Button from './Button';
 import Input, { InputProps } from './Input';
 
 interface FormProps {
-  inputs: InputProps[],
-  handleSubmit(e: React.FormEvent): void,
+  testId: string,
   btnTestId: string,
   btnText: string,
+  handleSubmit(e: React.FormEvent): void,
+  inputs: InputProps[],
 }
 
 export default function Form({
-  inputs, handleSubmit, btnTestId, btnText,
+  inputs, handleSubmit, btnTestId, btnText, testId,
 }:FormProps) {
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} data-testid={testId}>
       {
       inputs.map((input) => (
         <Input

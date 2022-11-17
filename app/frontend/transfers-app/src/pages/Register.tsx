@@ -30,6 +30,7 @@ export default function register() {
     <main>
       <h1>Registrar</h1>
       <Form
+        testId="form-register"
         btnTestId="button-register"
         btnText="Registrar"
         handleSubmit={handleSubmit}
@@ -38,7 +39,7 @@ export default function register() {
       <p>
         Já possui uma conta?
         {' '}
-        <Link to="/login">Log In.</Link>
+        <Link to="/login" data-testid="link-login">Log In.</Link>
       </p>
     </main>
   );
