@@ -28,12 +28,12 @@ export default function register() {
 
   return (
     <main>
-      <h1>Registro</h1>
+      <h1>Registrar</h1>
       <Form
-        handleSubmit={handleSubmit}
-        inputs={registerInputs}
         btnTestId="button-register"
         btnText="Registrar"
+        handleSubmit={handleSubmit}
+        inputs={registerInputs}
       />
       <p>
         Já possui uma conta?

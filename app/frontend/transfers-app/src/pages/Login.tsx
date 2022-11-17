@@ -30,10 +30,10 @@ export default function Login() {
     <main>
       <h1>Login</h1>
       <Form
-        handleSubmit={handleSubmit}
-        inputs={loginInputs}
         btnTestId="button-login"
         btnText="Entrar"
+        handleSubmit={handleSubmit}
+        inputs={loginInputs}
       />
       <p>
         Ainda não possui uma conta?
