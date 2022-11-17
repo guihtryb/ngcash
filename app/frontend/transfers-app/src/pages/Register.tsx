@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Form from '../components/Form';
 import { InputOnChange } from '../types';
 
@@ -27,6 +27,26 @@ const registerInputs = [
 ];
 
 export default function register() {
+  const navigate = useNavigate();
+
+  const validateRegister = (email: string, password: string): boolean => {
+    if (email && password) return true;
+    return false;
+  };
+
+  const doRegister = async (email: string, password: string) => {
+    const valid: boolean = validateRegister(email, password);
+
+    if (valid) navigate('/home');
+  };
+
+  const handleSubmit = (e: React.FormEvent, formsData: {[field: string]: string}) => {
+    e.preventDefault();
+    const { email, password } = formsData;
+
+    doRegister(email, password);
+  };
+
   return (
     <main>
       <h1>Registrar</h1>
@@ -35,6 +55,7 @@ export default function register() {
         btnTestId="button-register"
         btnText="Registrar"
         inputs={registerInputs}
+        handleSubmit={handleSubmit}
       />
       <p>
         Já possui uma conta?
