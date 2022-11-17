@@ -46,7 +46,7 @@ describe('Home page', () => {
     expect(screen.getByTestId('th-created-at')).toHaveTextContent('data');
   });
 
-  it.only('filter transfers by date succesfully', () => {
+  it('filter transfers by date succesfully', () => {
     const screen = render(<Home />, { wrapper: MemoryRouter });
 
     const inputTransfersFilter = screen.getByTestId('input-transfers-filter');

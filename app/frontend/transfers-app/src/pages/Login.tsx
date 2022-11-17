@@ -45,6 +45,7 @@ export default function Login() {
 
     doLogin(email, password);
   };
+
   return (
     <main>
       <h1>Login</h1>
