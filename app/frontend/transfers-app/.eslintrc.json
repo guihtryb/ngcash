@@ -22,10 +22,11 @@
         "@typescript-eslint"
     ],
     "rules": {
-        "react/jsx-filename-extension": "off",
         "import/extensions": "off",
-        "space-before-function-paren": "off",
+        "import/no-unresolved": "off",
+        "react/button-has-type": "off",
+        "react/jsx-filename-extension": "off",
         "react/prop-types": "off",
-        "import/no-unresolved": "off"
+        "space-before-function-paren": "off"
     }
 }
