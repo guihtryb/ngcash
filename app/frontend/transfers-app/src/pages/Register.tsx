@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Form from '../components/Form';
+import { InputOnChange } from '../types';
 
 const registerInputs = [
   {
@@ -10,6 +11,8 @@ const registerInputs = [
     id: 'input-register-email',
     placeholder: 'adalovelace@email.com',
     testId: 'input-register-email',
+    onChange: () => null as unknown as InputOnChange,
+    value: '',
   },
   {
     labelText: 'Password',
@@ -18,14 +21,12 @@ const registerInputs = [
     id: 'input-register-password',
     placeholder: 'password',
     testId: 'input-register-password',
+    onChange: () => null as unknown as InputOnChange,
+    value: '',
   },
 ];
 
 export default function register() {
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-  };
-
   return (
     <main>
       <h1>Registrar</h1>
@@ -33,7 +34,6 @@ export default function register() {
         testId="form-register"
         btnTestId="button-register"
         btnText="Registrar"
-        handleSubmit={handleSubmit}
         inputs={registerInputs}
       />
       <p>

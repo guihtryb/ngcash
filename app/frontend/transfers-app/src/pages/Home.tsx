@@ -2,6 +2,7 @@ import React from 'react';
 import Button from '../components/Button';
 import Form from '../components/Form';
 import Input from '../components/Input';
+import { InputOnChange } from '../types';
 
 const transferInputs = [
   {
@@ -11,21 +12,23 @@ const transferInputs = [
     id: 'input-transfer-username',
     placeholder: 'username',
     testId: 'input-transfer-username',
+    onChange: () => null as unknown as InputOnChange,
+    value: '',
   },
   {
     labelText: 'Valor',
     type: 'text',
     name: 'input-transfer-value',
     id: 'input-transfer-value',
-    placeholder: 'password',
+    placeholder: '100,00',
     testId: 'input-transfer-value',
+    onChange: () => null as unknown as InputOnChange,
+    value: 0,
   },
 ];
 
 export default function Home() {
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-  };
+  const handleChange = ({ target }: React.ChangeEvent<HTMLInputElement>) => target;
 
   return (
     <div>
@@ -50,7 +53,6 @@ export default function Home() {
             testId="form-transfer"
             btnTestId="button-submit-transfer"
             btnText="Transferir"
-            handleSubmit={handleSubmit}
             inputs={transferInputs}
           />
         </section>
@@ -63,6 +65,8 @@ export default function Home() {
             placeholder="20/09/2022"
             testId="input-transfers-filter"
             type="text"
+            onChange={handleChange}
+            value=""
             labelText="Filtrar transferência por data"
           />
           <table data-testid="table-transfers">
