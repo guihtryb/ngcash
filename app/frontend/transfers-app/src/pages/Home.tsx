@@ -1,103 +1,56 @@
 import React from 'react';
-import Button from '../components/Button';
-import Form from '../components/Form';
-import Input from '../components/Input';
-import { InputOnChange } from '../types';
+import Header from '../components/Header';
+import MakeTransferSection from '../components/MakeTransferSection';
+import { TransferItemProps } from '../components/TransferItem';
+import UserTransfersSection from '../components/UserTransfersSection';
 
-const transferInputs = [
+const transfersMock: TransferItemProps[] = [
   {
-    labelText: 'Transferir para',
-    type: 'text',
-    name: 'input-transfer-username',
-    id: 'input-transfer-username',
-    placeholder: 'username',
-    testId: 'input-transfer-username',
-    onChange: () => null as unknown as InputOnChange,
-    value: '',
+    id: 0,
+    debitedAccount: 'currentUser',
+    creditedAccount: 'creditedUser',
+    value: 20.50,
+    createdAt: '25/09/2022',
   },
   {
-    labelText: 'Valor',
-    type: 'text',
-    name: 'input-transfer-value',
-    id: 'input-transfer-value',
-    placeholder: '100,00',
-    testId: 'input-transfer-value',
-    onChange: () => null as unknown as InputOnChange,
-    value: 0,
+    id: 1,
+    debitedAccount: 'currentUser',
+    creditedAccount: 'ceditedUser',
+    value: 23,
+    createdAt: '20/09/2022',
   },
 ];
 
 export default function Home() {
-  const handleChange = ({ target }: React.ChangeEvent<HTMLInputElement>) => target;
+  const [usernameText, setUsernameText] = React.useState('');
+  const [userBalance, setUserBalance] = React.useState(0.0);
+  const [userTransfers, setUserTransfers] = React.useState([] as TransferItemProps[]);
+  const [transferDone, setTransferDone] = React.useState(false);
+
+  const getUserUsername = async () => setUsernameText('Guih');
+  const getUserBalance = async () => setUserBalance(0.0);
+  const getUserTransfers = async () => setUserTransfers(transfersMock);
+
+  React.useEffect(() => {
+    getUserUsername();
+    getUserBalance();
+    getUserTransfers();
+  }, []);
+
+  React.useEffect(() => {
+    getUserBalance();
+    getUserTransfers();
+  }, [transferDone]);
 
   return (
     <div>
-      <header>
-        <span>
-          Transfers App
-        </span>
-        <span data-testid="user-username-info">
-          Olá, username!
-        </span>
-        <span data-testid="user-balance-info">
-          Balance
-        </span>
-        <Button testId="button-log-out" text="Sair" handleClick={() => null} type="button" />
-      </header>
+      <Header usernameText={usernameText} userBalance={userBalance} />
 
       <main>
-        <section>
-          <h1>Realize transferências Instantaneamente!</h1>
-          <Button testId="button-show-transfer-form" text="Transferir" type="button" />
-          <Form
-            testId="form-transfer"
-            btnTestId="button-submit-transfer"
-            btnText="Transferir"
-            inputs={transferInputs}
-          />
-        </section>
-
-        <section>
-          <h1>Suas transferências</h1>
-          <Input
-            id="input-transfers-filter"
-            name="input-transfers-filter"
-            placeholder="20/09/2022"
-            testId="input-transfers-filter"
-            type="text"
-            onChange={handleChange}
-            value=""
-            labelText="Filtrar transferência por data"
-          />
-          <table data-testid="table-transfers">
-            <thead>
-              <tr>
-                <th data-testid="th-id">id</th>
-                <th data-testid="th-debited-acc">conta debitada</th>
-                <th data-testid="th-credited-acc">conta creditada</th>
-                <th data-testid="th-value">valor</th>
-                <th data-testid="th-created-at">data</th>
-              </tr>
-            </thead>
-
-            <tbody data-testid="transfers">
-              <tr>
-                <td>0</td>
-                <td>currentUser</td>
-                <td>creditedUser</td>
-                <td>10.00</td>
-                <td>20/09/2022</td>
-              </tr>
-              <tr>
-                <td>1</td>
-                <td>currentUser</td>
-                <td>creditedUser</td>
-                <td>25.00</td>
-                <td>25/12/2022</td>
-              </tr>
-            </tbody>
-          </table>
-        </section>
+        <MakeTransferSection setTransferDone={setTransferDone} />
+        {
+          userTransfers && <UserTransfersSection transfers={userTransfers} />
+        }
       </main>
     </div>
 
