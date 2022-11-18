@@ -3,7 +3,7 @@
 import '@testing-library/jest-dom/extend-expect';
 import { render } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-import Register from '../pages/Register';
+import Register from '../pages/Register/Register';
 
 describe('Register page', () => {
   it('has a Register title', () => {

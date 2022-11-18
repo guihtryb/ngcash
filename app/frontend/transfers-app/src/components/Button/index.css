@@ -6,9 +6,10 @@ button {
   font-family: var(--type-primary);
   font-weight: 700;
   cursor: pointer;
+  transition: box-shadow ease 0.3s;
   width: fit-content;
 }
 
 button:hover {
-  background: linear-gradient(120deg, var(--color-yellow-0), var(--color-yellow-1));
+  box-shadow: 0 0 10px 1px var(--color-black-1);
 }

@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Form from '../../components/Form';
 import { InputOnChange } from '../../types';
+
 import './index.css';
 
 const loginInputs = [
@@ -58,7 +59,7 @@ export default function Login() {
           inputs={loginInputs}
           handleSubmit={handleSubmit}
         />
-        <p>
+        <p className="sub">
           Ainda não possui uma conta?
           {' '}
           <Link to="/register" data-testid="link-register">Registre-se.</Link>

@@ -1,4 +1,4 @@
-.login {
+.register {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
@@ -8,6 +8,6 @@
   min-width: 350px;
 }
 
-.login button {
+.register button {
   width: 100%;
 }
