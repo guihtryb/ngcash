@@ -2,17 +2,18 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Form from '../../components/Form';
 import { InputOnChange } from '../../types';
+import passwordValidation from '../../utils/validations';
 
 import './index.css';
 
 const loginInputs = [
   {
-    labelText: 'Email',
-    type: 'email',
-    name: 'email',
-    id: 'input-login-email',
-    placeholder: 'adalovelace@email.com',
-    testId: 'input-login-email',
+    labelText: 'Username',
+    type: 'text',
+    name: 'username',
+    id: 'input-login-username',
+    placeholder: 'Username',
+    testId: 'input-login-username',
     onChange: () => null as unknown as InputOnChange,
     value: '',
   },
@@ -29,23 +30,36 @@ const loginInputs = [
 ];
 
 export default function Login() {
+  const [feedbackMessage, setFeedbackMessage] = React.useState('');
   const navigate = useNavigate();
-  const validateLogin = (email: string, password: string): boolean => {
-    if (email && password) return true;
-    return false;
+
+  const validateLogin = (username: string, password: string): boolean => {
+    if (!username || username.length < 3) {
+      setFeedbackMessage('Insira um username válido!');
+      return false;
+    }
+
+    const validPassword = passwordValidation(password);
+
+    if (!validPassword) {
+      setFeedbackMessage('Senha inválida');
+      return false;
+    }
+
+    return true;
   };
 
-  const doLogin = async (email: string, password: string) => {
-    const valid: boolean = validateLogin(email, password);
+  const doLogin = async (username: string, password: string) => {
+    const valid: boolean = validateLogin(username, password);
 
     if (valid) navigate('/home');
   };
 
   const handleSubmit = (e: React.FormEvent, formsData: {[field: string]: string}) => {
     e.preventDefault();
-    const { email, password } = formsData;
+    const { username, password } = formsData;
 
-    doLogin(email, password);
+    doLogin(username, password);
   };
 
   return (
@@ -59,6 +73,9 @@ export default function Login() {
           inputs={loginInputs}
           handleSubmit={handleSubmit}
         />
+        {
+          feedbackMessage && (<p className="sub">{feedbackMessage}</p>)
+        }
         <p className="sub">
           Ainda não possui uma conta?
           {' '}

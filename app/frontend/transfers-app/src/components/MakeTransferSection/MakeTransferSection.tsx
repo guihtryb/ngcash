@@ -144,8 +144,8 @@ export default function MakeTransferSection(
             handleSubmit={handleSubmit}
           />
           {
-          feedbackMessage && (<p className="sub">{feedbackMessage}</p>)
-        }
+            feedbackMessage && (<p className="sub">{feedbackMessage}</p>)
+          }
         </div>
       </div>
     </section>
