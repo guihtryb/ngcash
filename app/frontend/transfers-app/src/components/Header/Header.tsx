@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '../Button/Button';
+
 import './index.css';
 
 interface HeaderProps {
@@ -11,9 +12,7 @@ interface HeaderProps {
 export default function Header({ usernameText, userBalance }: HeaderProps) {
   const navigate = useNavigate();
 
-  const logOut = () => {
-    navigate('/login');
-  };
+  const logOut = () => navigate('/login');
 
   return (
     <header>

@@ -79,7 +79,7 @@ export default function register() {
         <p className="sub">
           Já possui uma conta?
           {' '}
-          <Link to="/Register" data-testid="link-Register">Log In.</Link>
+          <Link to="/login" data-testid="link-Register">Log In.</Link>
         </p>
       </div>
     </main>
