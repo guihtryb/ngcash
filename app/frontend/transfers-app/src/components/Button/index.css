@@ -6,10 +6,5 @@ button {
   font-family: var(--type-primary);
   font-weight: 700;
   cursor: pointer;
-  transition: box-shadow ease 0.3s;
   min-width: 6rem;
-}
-
-button:hover {
-  box-shadow: 0 0 10px 1px var(--color-black-1);
 }

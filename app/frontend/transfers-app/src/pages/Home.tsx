@@ -1,6 +1,6 @@
 import React from 'react';
 import Header from '../components/Header/Header';
-import MakeTransferSection from '../components/MakeTransferSection';
+import MakeTransferSection from '../components/MakeTransferSection/MakeTransferSection';
 import { TransferItemProps } from '../components/TransferItem';
 import UserTransfersSection from '../components/UserTransfersSection';
 
@@ -15,7 +15,7 @@ export const transfersMock: TransferItemProps[] = [
   {
     id: 1,
     debitedAccount: 'currentUser',
-    creditedAccount: 'ceditedUser',
+    creditedAccount: 'creditedUser',
     value: 23,
     createdAt: '20/09/2022',
   },

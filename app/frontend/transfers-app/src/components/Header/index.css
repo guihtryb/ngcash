@@ -5,7 +5,7 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem;
+  padding: 1rem 2rem;
 }
 
 header span {
@@ -17,4 +17,11 @@ header span {
 .col-1 {
   display: flex;
   gap: 1rem;
+  align-items: center;
+}
+
+.balance-info {
+  background-color: var(--color-black-2);
+  padding: 0.5rem;
+  border-radius: 8px;
 }

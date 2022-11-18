@@ -24,8 +24,11 @@ export default function Header({ usernameText, userBalance }: HeaderProps) {
         <span data-testid="user-username-info">
           {`Olá, ${usernameText}!`}
         </span>
-        <span data-testid="user-balance-info">
-          {`Saldo: ${userBalance}`}
+        <span
+          data-testid="user-balance-info"
+          className="balance-info"
+        >
+          {`Saldo: R$ ${userBalance}`}
         </span>
       </div>
       <Button testId="button-log-out" text="Sair" handleClick={logOut} type="button" />

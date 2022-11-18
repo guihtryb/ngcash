@@ -41,7 +41,7 @@ export default function UserTransfersSection({ transfers }: UserTransfersSection
   };
 
   return (
-    <section>
+    <section className="section">
       <h1>Suas transferências</h1>
       <Input
         id="input-transfers-filter"
