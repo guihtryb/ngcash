@@ -1,0 +1,10 @@
+button {
+  padding: 0.5rem 1rem;
+  border: none;
+  background-color: var(--color-yellow-0);
+  border-radius: 0.25rem;
+  font-family: var(--type-primary);
+  font-weight: 700;
+  cursor: pointer;
+  min-width: 6rem;
+}

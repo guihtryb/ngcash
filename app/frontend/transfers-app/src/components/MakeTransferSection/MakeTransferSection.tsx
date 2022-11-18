@@ -1,9 +1,11 @@
 import React from 'react';
-import { transfersMock } from '../pages/Home';
-import { InputOnChange } from '../types';
-import Button from './Button';
-import Form from './Form';
-import { TransferItemProps } from './TransferItem';
+import { transfersMock } from '../../pages/Home';
+import { InputOnChange } from '../../types';
+import Button from '../Button/Button';
+import Form from '../Form';
+import { TransferItemProps } from '../TransferItem';
+
+import './index.css';
 
 const transferInputs = [
   {
@@ -106,21 +108,23 @@ export default function MakeTransferSection(
   };
 
   return (
-    <section>
-      <h1>Realize transferências Instantaneamente!</h1>
+    <section className="section">
+      <h1 className="title">Realize transferências Instantaneamente!</h1>
       <Button testId="button-show-transfer-form" text="Transferir" type="button" handleClick={() => setShowMakeTransfer(true)} />
-      <div style={showMakeTransfer ? { display: 'block' } : { display: 'none' }}>
-        <Button testId="button-close-transfer-form" text="X" type="button" handleClick={handleClose} />
-        <Form
-          testId="form-transfer"
-          btnTestId="button-submit-transfer"
-          btnText="Transferir"
-          inputs={transferInputs}
-          handleSubmit={handleSubmit}
-        />
-        {
-          feedbackMessage && (<p>{feedbackMessage}</p>)
+      <div className={`modal-container ${showMakeTransfer ? 'open' : ''}`}>
+        <div className="modal">
+          <Button testId="button-close-transfer-form" text="X" type="button" handleClick={handleClose} />
+          <Form
+            testId="form-transfer"
+            btnTestId="button-submit-transfer"
+            btnText="Transferir"
+            inputs={transferInputs}
+            handleSubmit={handleSubmit}
+          />
+          {
+          feedbackMessage && (<p className="sub">{feedbackMessage}</p>)
         }
+        </div>
       </div>
     </section>
 

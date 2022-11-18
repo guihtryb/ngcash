@@ -1,4 +1,5 @@
 import React from 'react';
+import './index.css';
 
 interface ButtonProps {
   type: 'button' | 'submit' | 'reset';

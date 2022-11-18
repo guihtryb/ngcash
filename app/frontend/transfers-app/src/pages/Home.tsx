@@ -1,8 +1,8 @@
 import React from 'react';
-import Header from '../components/Header';
-import MakeTransferSection from '../components/MakeTransferSection';
+import Header from '../components/Header/Header';
+import MakeTransferSection from '../components/MakeTransferSection/MakeTransferSection';
 import { TransferItemProps } from '../components/TransferItem';
-import UserTransfersSection from '../components/UserTransfersSection';
+import UserTransfersSection from '../components/UserTransfersSection/UserTransfersSection';
 
 export const transfersMock: TransferItemProps[] = [
   {
@@ -15,7 +15,7 @@ export const transfersMock: TransferItemProps[] = [
   {
     id: 1,
     debitedAccount: 'currentUser',
-    creditedAccount: 'ceditedUser',
+    creditedAccount: 'creditedUser',
     value: 23,
     createdAt: '20/09/2022',
   },
@@ -45,15 +45,18 @@ export default function Home() {
     <div>
       <Header usernameText={usernameText} userBalance={userBalance} />
 
-      <main>
-        <MakeTransferSection
-          setTransferDone={setTransferDone}
-          userBalance={userBalance}
-          setUserBalance={setUserBalance}
-        />
-        {
+      <main className="page">
+        <div className="container">
+          <MakeTransferSection
+            setTransferDone={setTransferDone}
+            userBalance={userBalance}
+            setUserBalance={setUserBalance}
+          />
+          {
           userTransfers && <UserTransfersSection transfers={userTransfers} />
         }
+        </div>
+
       </main>
     </div>
 

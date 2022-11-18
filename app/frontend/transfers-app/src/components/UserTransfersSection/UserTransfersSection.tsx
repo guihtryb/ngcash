@@ -1,6 +1,8 @@
 import React from 'react';
-import Input from './Input';
-import TransferItem, { TransferItemProps } from './TransferItem';
+import Input from '../Input';
+import TransferItem, { TransferItemProps } from '../TransferItem';
+
+import './index.css';
 
 interface UserTransfersSectionProps {
   transfers: TransferItemProps[]
@@ -41,7 +43,7 @@ export default function UserTransfersSection({ transfers }: UserTransfersSection
   };
 
   return (
-    <section>
+    <section className="section transfers">
       <h1>Suas transferências</h1>
       <Input
         id="input-transfers-filter"

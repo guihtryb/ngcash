@@ -27,6 +27,7 @@
         "react/button-has-type": "off",
         "react/jsx-filename-extension": "off",
         "react/prop-types": "off",
-        "space-before-function-paren": "off"
+        "space-before-function-paren": "off",
+        "import/no-absolute-path": "off"
     }
 }

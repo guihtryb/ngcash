@@ -1,0 +1,27 @@
+header {
+  position: fixed;
+  background-color: var(--color-black-0);
+  width: 100vw;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 2rem;
+}
+
+header span {
+  color: var(--color-white-0);
+  font-weight: 700;
+  font-family: var(--type-primary);
+}
+
+.col-1 {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.balance-info {
+  background-color: var(--color-black-2);
+  padding: 0.5rem;
+  border-radius: 8px;
+}
