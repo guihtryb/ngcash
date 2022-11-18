@@ -13,11 +13,11 @@ describe('Register page', () => {
 
     expect(title.textContent).toBe('Registrar');
   });
-  it('has a Register form with email, password fields and submit button', () => {
+  it('has a Register form with username, password fields and submit button', () => {
     const screen = render(<Register />, { wrapper: MemoryRouter });
 
     expect(screen.getByTestId('form-register')).toBeInTheDocument();
-    expect(screen.getByTestId('input-register-email')).toBeInTheDocument();
+    expect(screen.getByTestId('input-register-username')).toBeInTheDocument();
     expect(screen.getByTestId('input-register-password')).toBeInTheDocument();
     expect(screen.getByTestId('button-register')).toBeInTheDocument();
   });

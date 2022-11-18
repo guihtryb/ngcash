@@ -13,7 +13,7 @@ const transferInputs = [
     type: 'text',
     name: 'inputTransferUsername',
     id: 'input-transfer-username',
-    placeholder: 'username',
+    placeholder: 'Nome do usuário',
     testId: 'input-transfer-username',
     onChange: () => null as unknown as InputOnChange,
     value: '',
@@ -57,7 +57,7 @@ export default function MakeTransferSection(
     return Number(formated);
   };
 
-  const validateTransfer = (transferValue: string) => {
+  const validateTransferValue = (transferValue: string) => {
     const numberRegEx = /[.]?[0-9]/;
     if (!numberRegEx.test(transferValue)) {
       setFeedbackMessage('Insira um valor válido para transferência!');
@@ -70,23 +70,45 @@ export default function MakeTransferSection(
       setFeedbackMessage('Você não possui saldo suficiente');
       return false;
     }
+
+    if (formatedValue <= 0) {
+      setFeedbackMessage('Insira um valor válido para transferência!');
+      return false;
+    }
     return true;
   };
 
-  const doTransfer = (formsData: {[field: string]: string}) => {
+  const validateTransferUsername = (username: string) => {
+    if (!username || username.length < 3) {
+      setFeedbackMessage('Insira um nome de usuário válido!');
+      return false;
+    }
+    return true;
+  };
+
+  const validateTransfer = (transferValue: string, username: string) => {
+    const [validValue, validateUsername] = [
+      validateTransferValue(transferValue),
+      validateTransferUsername(username),
+    ];
+
+    return validValue && validateUsername;
+  };
+
+  const doTransfer = ({ inputTransferValue, inputTransferUsername }: {[field: string]: string}) => {
     const now = new Date();
     const [day, month, year] = [now.getDate(), now.getMonth() + 1, now.getFullYear()];
 
-    const valid = validateTransfer(formsData.inputTransferValue);
+    const valid = validateTransfer(inputTransferValue, inputTransferUsername);
 
     if (!valid) {
       setTransferDone(false);
     } else {
-      const transferValue = formatValueInput(formsData.inputTransferValue);
+      const transferValue = formatValueInput(inputTransferValue);
 
       const transfer: TransferItemProps = {
         id: transfersMock.length,
-        creditedAccount: formsData.inputTransferUsername,
+        creditedAccount: inputTransferUsername,
         debitedAccount: 'currentUser',
         createdAt: `${day}/${month}/${year}`,
         value: transferValue,
@@ -122,8 +144,8 @@ export default function MakeTransferSection(
             handleSubmit={handleSubmit}
           />
           {
-          feedbackMessage && (<p className="sub">{feedbackMessage}</p>)
-        }
+            feedbackMessage && (<p className="sub">{feedbackMessage}</p>)
+          }
         </div>
       </div>
     </section>

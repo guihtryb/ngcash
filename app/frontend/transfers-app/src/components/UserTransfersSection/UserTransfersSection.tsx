@@ -44,7 +44,7 @@ export default function UserTransfersSection({ transfers }: UserTransfersSection
 
   return (
     <section className="section transfers">
-      <h1>Suas transferências</h1>
+      <h1 className="title">Suas transferências</h1>
       <Input
         id="input-transfers-filter"
         name="input-transfers-filter"
