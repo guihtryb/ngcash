@@ -53,6 +53,9 @@ label {
   font-family: var(--type-primary);
   font-size: 1.25rem;
   font-weight: 700;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
 button, input {

@@ -133,8 +133,8 @@ export default function MakeTransferSection(
     <section className="section">
       <h1 className="title">Realize transferências Instantaneamente!</h1>
       <Button testId="button-show-transfer-form" text="Transferir" type="button" handleClick={() => setShowMakeTransfer(true)} />
-      <div className={`modal-container ${showMakeTransfer ? 'open' : ''}`}>
-        <div className="modal">
+      <div className="modal-container" style={showMakeTransfer ? { display: 'flex' } : { display: 'none' }}>
+        <div className="modal" style={showMakeTransfer ? { display: 'block' } : { display: 'none' }}>
           <Button testId="button-close-transfer-form" text="X" type="button" handleClick={handleClose} />
           <Form
             testId="form-transfer"
