@@ -4,7 +4,7 @@ import MakeTransferSection from '../components/MakeTransferSection';
 import { TransferItemProps } from '../components/TransferItem';
 import UserTransfersSection from '../components/UserTransfersSection';
 
-const transfersMock: TransferItemProps[] = [
+export const transfersMock: TransferItemProps[] = [
   {
     id: 0,
     debitedAccount: 'currentUser',
@@ -28,17 +28,16 @@ export default function Home() {
   const [transferDone, setTransferDone] = React.useState(false);
 
   const getUserUsername = async () => setUsernameText('Guih');
-  const getUserBalance = async () => setUserBalance(0.0);
+  const getUserBalance = async (value: number) => setUserBalance(value);
   const getUserTransfers = async () => setUserTransfers(transfersMock);
 
   React.useEffect(() => {
     getUserUsername();
-    getUserBalance();
+    getUserBalance(200);
     getUserTransfers();
   }, []);
 
   React.useEffect(() => {
-    getUserBalance();
     getUserTransfers();
   }, [transferDone]);
 
@@ -47,7 +46,11 @@ export default function Home() {
       <Header usernameText={usernameText} userBalance={userBalance} />
 
       <main>
-        <MakeTransferSection setTransferDone={setTransferDone} />
+        <MakeTransferSection
+          setTransferDone={setTransferDone}
+          userBalance={userBalance}
+          setUserBalance={setUserBalance}
+        />
         {
           userTransfers && <UserTransfersSection transfers={userTransfers} />
         }
