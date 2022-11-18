@@ -1,7 +1,7 @@
 import React from 'react';
 import { transfersMock } from '../pages/Home';
 import { InputOnChange } from '../types';
-import Button from './Button';
+import Button from './Button/Button';
 import Form from './Form';
 import { TransferItemProps } from './TransferItem';
 

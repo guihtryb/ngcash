@@ -3,7 +3,7 @@
 import '@testing-library/jest-dom/extend-expect';
 import { render } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-import Login from '../pages/Login';
+import Login from '../pages/Login/Login';
 
 describe('Login page', () => {
   it('has a Login title', () => {

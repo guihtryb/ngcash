@@ -1,0 +1,9 @@
+.login {
+  border: 2px solid;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  background-color: var(--color-black-0);
+  padding: 2rem 1rem;
+  border-radius: 0.5rem;
+}

@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import Form from '../components/Form';
-import { InputOnChange } from '../types';
+import Form from '../../components/Form';
+import { InputOnChange } from '../../types';
+import './index.css';
 
 const loginInputs = [
   {
@@ -47,20 +48,22 @@ export default function Login() {
   };
 
   return (
-    <main>
-      <h1>Login</h1>
-      <Form
-        testId="form-login"
-        btnTestId="button-login"
-        btnText="Entrar"
-        inputs={loginInputs}
-        handleSubmit={handleSubmit}
-      />
-      <p>
-        Ainda não possui uma conta?
-        {' '}
-        <Link to="/register" data-testid="link-register">Registre-se.</Link>
-      </p>
+    <main className="page">
+      <div className="container login">
+        <h1 className="title">Login</h1>
+        <Form
+          testId="form-login"
+          btnTestId="button-login"
+          btnText="Entrar"
+          inputs={loginInputs}
+          handleSubmit={handleSubmit}
+        />
+        <p>
+          Ainda não possui uma conta?
+          {' '}
+          <Link to="/register" data-testid="link-register">Registre-se.</Link>
+        </p>
+      </div>
     </main>
   );
 }

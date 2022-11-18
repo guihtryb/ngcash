@@ -3,7 +3,8 @@
 import '@testing-library/jest-dom/extend-expect';
 import { fireEvent, render } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-import Home from '../pages/Home';
+import UserTransfersSection from '../components/UserTransfersSection';
+import Home, { transfersMock } from '../pages/Home';
 
 describe('Home page', () => {
   it('has a header with the user balance and username infos and a logout button', () => {
@@ -46,8 +47,11 @@ describe('Home page', () => {
     expect(screen.getByTestId('th-created-at')).toHaveTextContent('data');
   });
 
-  it.only('filter transfers by date succesfully', () => {
-    const screen = render(<Home />, { wrapper: MemoryRouter });
+  it('filter transfers by date succesfully', () => {
+    const screen = render(
+      <UserTransfersSection transfers={transfersMock} />,
+      { wrapper: MemoryRouter },
+    );
 
     const inputTransfersFilter = screen.getByTestId('input-transfers-filter');
     const transfers = screen.getByTestId('transfers');
