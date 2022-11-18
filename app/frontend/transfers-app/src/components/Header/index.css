@@ -1,0 +1,20 @@
+header {
+  position: fixed;
+  background-color: var(--color-black-0);
+  width: 100vw;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+}
+
+header span {
+  color: var(--color-white-0);
+  font-weight: 700;
+  font-family: var(--type-primary);
+}
+
+.col-1 {
+  display: flex;
+  gap: 1rem;
+}

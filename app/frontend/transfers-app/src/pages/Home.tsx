@@ -1,5 +1,5 @@
 import React from 'react';
-import Header from '../components/Header';
+import Header from '../components/Header/Header';
 import MakeTransferSection from '../components/MakeTransferSection';
 import { TransferItemProps } from '../components/TransferItem';
 import UserTransfersSection from '../components/UserTransfersSection';
@@ -45,15 +45,18 @@ export default function Home() {
     <div>
       <Header usernameText={usernameText} userBalance={userBalance} />
 
-      <main>
-        <MakeTransferSection
-          setTransferDone={setTransferDone}
-          userBalance={userBalance}
-          setUserBalance={setUserBalance}
-        />
-        {
+      <main className="page">
+        <div className="container">
+          <MakeTransferSection
+            setTransferDone={setTransferDone}
+            userBalance={userBalance}
+            setUserBalance={setUserBalance}
+          />
+          {
           userTransfers && <UserTransfersSection transfers={userTransfers} />
         }
+        </div>
+
       </main>
     </div>
 
