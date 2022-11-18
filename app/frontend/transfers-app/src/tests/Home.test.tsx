@@ -3,7 +3,7 @@
 import '@testing-library/jest-dom/extend-expect';
 import { fireEvent, render } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-import UserTransfersSection from '../components/UserTransfersSection';
+import UserTransfersSection from '../components/UserTransfersSection/UserTransfersSection';
 import Home, { transfersMock } from '../pages/Home';
 
 describe('Home page', () => {

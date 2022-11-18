@@ -1,0 +1,18 @@
+.transfers {
+  max-height: 300px;
+  overflow-y: scroll;
+}
+
+.transfers::-webkit-scrollbar {
+  width: 0.6rem;
+  border-radius: 2rem;
+}
+ 
+.transfers::-webkit-scrollbar-track {
+  background-color: var(--color-black-2);
+}
+ 
+.transfers::-webkit-scrollbar-thumb {
+  background-color: var(--color-yellow-0);
+  border-radius: 1rem;
+}

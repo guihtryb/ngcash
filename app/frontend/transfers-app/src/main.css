@@ -14,6 +14,7 @@
 
 html, body {
   max-width: 100%;
+  overflow-x: hidden;
   --type-primary: 'Nunito', 'Arial', 'sans-serif';
   --type-secondary: 'Roboto', 'Georgia';
   --color-black-0: #000;
@@ -86,10 +87,10 @@ p {
 }
 
 table {
+  padding: 0.5rem 0;
   color: var(--color-white-0);
   font-family: var(--type-primary);
   width: 100%;
-  gap: 0.5rem;
   border-radius: 4px;
   background-color: var(--color-black-1);
 }
@@ -97,6 +98,7 @@ table {
 td {
   text-align: center;
   width: fit-content;
+  padding-top: 0.75rem;
 }
 
 .page {
@@ -110,20 +112,21 @@ td {
 
 .container {
   max-width: 1200px;
+  padding-top: 86px;
 }
 
 .section {
+  align-items: flex-start;
   background-color: var(--color-black-0);
+  border-radius: 0.5rem;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
   gap: 1.5rem;
-  padding: 1rem;
-  border-radius: 0.5rem;
-  width: 80vw;
-  min-width: 350px;
-  max-width: 1200px;
   margin: 1.5rem auto;
+  max-width: 1200px;
+  min-width: 350px;
+  padding: 1rem;
+  width: 80vw;
 }
 
 .title {

@@ -2,7 +2,7 @@ import React from 'react';
 import Header from '../components/Header/Header';
 import MakeTransferSection from '../components/MakeTransferSection/MakeTransferSection';
 import { TransferItemProps } from '../components/TransferItem';
-import UserTransfersSection from '../components/UserTransfersSection';
+import UserTransfersSection from '../components/UserTransfersSection/UserTransfersSection';
 
 export const transfersMock: TransferItemProps[] = [
   {

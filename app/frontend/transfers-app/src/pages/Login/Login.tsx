@@ -50,7 +50,7 @@ export default function Login() {
 
   return (
     <main className="page">
-      <div className="container login">
+      <div className="login">
         <h1 className="title">Login</h1>
         <Form
           testId="form-login"
