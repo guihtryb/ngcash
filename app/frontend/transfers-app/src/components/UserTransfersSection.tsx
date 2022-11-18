@@ -1,8 +1,44 @@
 import React from 'react';
 import Input from './Input';
+import TransferItem, { TransferItemProps } from './TransferItem';
 
-export default function UserTransfersSection() {
-  const handleChange = ({ target }: React.ChangeEvent<HTMLInputElement>) => target;
+interface UserTransfersSectionProps {
+  transfers: TransferItemProps[]
+}
+
+export default function UserTransfersSection({ transfers }: UserTransfersSectionProps) {
+  const [filterByDate, setFilterByDate] = React.useState('');
+
+  const handleChange = ({ target }: React.ChangeEvent<HTMLInputElement>) => {
+    setFilterByDate(target.value);
+  };
+
+  const handleFilter = (data: TransferItemProps[]) => {
+    if (filterByDate) {
+      return data
+        .map((transferItem) => transferItem.createdAt.includes(filterByDate) && (
+          <TransferItem
+            key={transferItem.id}
+            id={transferItem.id}
+            creditedAccount={transferItem.creditedAccount}
+            debitedAccount={transferItem.debitedAccount}
+            value={transferItem.value}
+            createdAt={transferItem.createdAt}
+          />
+        ));
+    }
+
+    return data.map((transferItem) => transferItem.createdAt.includes(filterByDate) && (
+      <TransferItem
+        key={transferItem.id}
+        id={transferItem.id}
+        creditedAccount={transferItem.creditedAccount}
+        debitedAccount={transferItem.debitedAccount}
+        value={transferItem.value}
+        createdAt={transferItem.createdAt}
+      />
+    ));
+  };
 
   return (
     <section>
@@ -14,7 +50,7 @@ export default function UserTransfersSection() {
         testId="input-transfers-filter"
         type="text"
         onChange={handleChange}
-        value=""
+        value={filterByDate}
         labelText="Filtrar transferência por data"
       />
       <table data-testid="table-transfers">
@@ -29,22 +65,10 @@ export default function UserTransfersSection() {
         </thead>
 
         <tbody data-testid="transfers">
-          <tr>
-            <td>0</td>
-            <td>currentUser</td>
-            <td>creditedUser</td>
-            <td>10.00</td>
-            <td>20/09/2022</td>
-          </tr>
-          <tr>
-            <td>1</td>
-            <td>currentUser</td>
-            <td>creditedUser</td>
-            <td>25.00</td>
-            <td>25/12/2022</td>
-          </tr>
+          { transfers.length ? handleFilter(transfers) : null }
         </tbody>
       </table>
+      { !transfers.length && (<p>Você ainda não possui transferências!</p>) }
     </section>
   );
 }

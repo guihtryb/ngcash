@@ -46,7 +46,7 @@ describe('Home page', () => {
     expect(screen.getByTestId('th-created-at')).toHaveTextContent('data');
   });
 
-  it('filter transfers by date succesfully', () => {
+  it.only('filter transfers by date succesfully', () => {
     const screen = render(<Home />, { wrapper: MemoryRouter });
 
     const inputTransfersFilter = screen.getByTestId('input-transfers-filter');
@@ -54,7 +54,7 @@ describe('Home page', () => {
 
     expect(transfers.children).toHaveLength(2);
 
-    fireEvent.change(inputTransfersFilter, { target: { value: '20/09/2001' } });
+    fireEvent.change(inputTransfersFilter, { target: { value: '20/09/2022' } });
 
     expect(transfers.children).toHaveLength(1);
   });

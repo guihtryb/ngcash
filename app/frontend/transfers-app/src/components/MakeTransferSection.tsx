@@ -26,11 +26,26 @@ const transferInputs = [
   },
 ];
 
-export default function MakeTransferSection() {
+interface MakeTransferSectionProps {
+  setTransferDone: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+export default function MakeTransferSection(
+  { setTransferDone }: MakeTransferSectionProps,
+) {
   const [showMakeTransfer, setShowMakeTransfer] = React.useState(false);
+  const [feedbackMessage, setFeedbackMessage] = React.useState('');
+
+  const handleClose = () => {
+    setShowMakeTransfer(false);
+    setFeedbackMessage('');
+    setTransferDone(false);
+  };
 
   const handleSubmit = (e: React.FormEvent, formsData: {[field: string]: string}) => {
     e.preventDefault();
+    setFeedbackMessage('Transferência realizada com sucesso!');
+    setTransferDone(true);
   };
 
   return (
@@ -38,7 +53,7 @@ export default function MakeTransferSection() {
       <h1>Realize transferências Instantaneamente!</h1>
       <Button testId="button-show-transfer-form" text="Transferir" type="button" handleClick={() => setShowMakeTransfer(true)} />
       <div style={showMakeTransfer ? { display: 'block' } : { display: 'none' }}>
-        <Button testId="button-close-transfer-form" text="X" type="button" handleClick={() => setShowMakeTransfer(false)} />
+        <Button testId="button-close-transfer-form" text="X" type="button" handleClick={handleClose} />
         <Form
           testId="form-transfer"
           btnTestId="button-submit-transfer"
@@ -46,6 +61,7 @@ export default function MakeTransferSection() {
           inputs={transferInputs}
           handleSubmit={handleSubmit}
         />
+        <p>{ feedbackMessage && feedbackMessage }</p>
       </div>
     </section>
 
