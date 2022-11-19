@@ -1,9 +1,6 @@
 /* eslint-disable import/no-unresolved */
 import Fastify from 'fastify';
-import { z } from 'zod';
-import prisma from './lib/prisma';
-import { compare } from './plugins/bcrypt';
-import { createToken } from './plugins/jwt';
+import transactionRoutes from './routes/transactions';
 import userRoutes from './routes/user';
 
 async function start() {
@@ -13,7 +10,7 @@ async function start() {
 
   await fastify.register(userRoutes);
 
-  fastify.post('/transactions/:cashInAccountUsername', () => {});
+  await fastify.register(transactionRoutes);
 
   fastify.get('/transactions/:accountId', () => {});
 
