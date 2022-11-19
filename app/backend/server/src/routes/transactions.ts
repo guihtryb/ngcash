@@ -3,7 +3,7 @@ import { Account, User } from '@prisma/client';
 import { FastifyInstance } from 'fastify';
 import { z } from 'zod';
 import prisma from '../lib/prisma';
-import { verifyToken } from '../plugins/jwt';
+import authenticate from '../plugins/authenticate';
 
 const newBalance = (
   previousBalance: number,
@@ -14,16 +14,6 @@ const newBalance = (
     return ((previousBalance * 100) + (value * 100)) / 100;
   }
   return ((previousBalance * 100) - (value * 100)) / 100;
-};
-
-const authenticate = (token: string | undefined) => {
-  if (!token) return false;
-
-  const validToken = verifyToken(token);
-
-  if (!validToken) return false;
-
-  return true;
 };
 
 async function transactionRoutes(fastify: FastifyInstance) {
