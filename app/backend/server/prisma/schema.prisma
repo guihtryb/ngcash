@@ -1,0 +1,47 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+generator erd {
+  provider = "prisma-erd-generator"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  username  String   @unique
+  password  String?
+  accountId Int      @unique
+
+  account   Account?
+}
+
+model Account {
+  id      Int     @id @default(autoincrement())
+  balance Decimal
+  userId  Int     @unique
+
+  user User @relation(fields: [userId], references: [id])
+
+  cashInAccount  Transaction[] @relation("cashInAccount")
+  cashOutAccount Transaction[] @relation("cashOutAccount")
+}
+
+model Transaction {
+  id                String   @id @default(cuid())
+  debitedAccountId  Int
+  creditedAccountId Int
+  value             Decimal
+  createdAt         DateTime @default(now())
+
+  cashInAccount Account @relation("cashInAccount", fields: [creditedAccountId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  cashOutAccount Account @relation("cashOutAccount", fields: [debitedAccountId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+}
