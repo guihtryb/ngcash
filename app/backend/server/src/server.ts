@@ -1,19 +1,19 @@
-import { PrismaClient } from '@prisma/client';
+/* eslint-disable import/no-unresolved */
 import Fastify from 'fastify';
-
-const prisma = new PrismaClient({
-  log: ['query'],
-});
+import userRoutes from './routes/user';
 
 async function start() {
   const fastify = Fastify({
     logger: true,
   });
 
-  fastify.get('/users', async () => {
-    const users = await prisma.user.findMany();
-    return { users };
-  });
+  await fastify.register(userRoutes);
+
+  fastify.post('/login/', () => {});
+
+  fastify.post('/transactions/:cashInAccountUsername', () => {});
+
+  fastify.get('/transactions/:accountId', () => {});
 
   await fastify.listen({ port: 3000 });
 }
