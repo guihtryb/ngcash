@@ -30,7 +30,7 @@ async function userRoutes(fastify: FastifyInstance) {
 
       if (userAlreadyExists) {
         return reply.status(400).send({
-          message: 'Nome de usário já em uso.',
+          message: 'Nome de usário já em uso',
         });
       }
 
