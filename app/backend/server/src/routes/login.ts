@@ -5,16 +5,17 @@ import { z } from 'zod';
 import prisma from '../lib/prisma';
 import { compare } from '../plugins/bcrypt';
 import { createToken } from '../plugins/jwt';
+import exclude from '../utils/exclude';
 
 async function loginRoutes(fastify: FastifyInstance) {
   fastify.post('/login', async (request, reply) => {
-    const createLoginParms = z.object({
-      username: z.string(),
-      password: z.string(),
+    const createLoginBody = z.object({
+      username: z.string().min(3, 'Nome de usuário deve ter no mínimo 3 caracteres'),
+      password: z.string().regex(/^(?=.*\d)(?=.*[A-Z])[0-9a-zA-Z$*&@#]{8,}$/, 'Senha deve conter 1 número, 1 letra maiúscula e 8 caracteres'),
     });
 
     try {
-      const { username, password } = createLoginParms.parse(request.body);
+      const { username, password } = createLoginBody.parse(request.body);
 
       const user = await prisma.user.findUnique({
         where: {
@@ -36,6 +37,7 @@ async function loginRoutes(fastify: FastifyInstance) {
         });
       }
 
+      const userWithoutPass = exclude(user, ['password']);
       const account = await prisma.account.findUnique({
         where: {
           userId: user.id,
@@ -43,7 +45,7 @@ async function loginRoutes(fastify: FastifyInstance) {
       }) as Account;
 
       const userWithBalance = {
-        ...user,
+        ...userWithoutPass,
         balance: account.balance,
       };
 

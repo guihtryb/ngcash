@@ -35,7 +35,7 @@ model Account {
 }
 
 model Transaction {
-  id                String   @id @default(cuid())
+  id                Int   @id @default(autoincrement())
   debitedAccountId  Int
   creditedAccountId Int
   value             Decimal
