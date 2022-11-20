@@ -1,5 +1,4 @@
 /* eslint-disable import/no-unresolved */
-import { Account } from '@prisma/client';
 import { FastifyInstance } from 'fastify';
 import { z } from 'zod';
 import prisma from '../lib/prisma';
@@ -38,21 +37,11 @@ async function loginRoutes(fastify: FastifyInstance) {
       }
 
       const userWithoutPass = exclude(user, ['password']);
-      const account = await prisma.account.findUnique({
-        where: {
-          userId: user.id,
-        },
-      }) as Account;
-
-      const userWithBalance = {
-        ...userWithoutPass,
-        balance: account.balance,
-      };
 
       const token = createToken(user);
 
       return reply.status(200).send({
-        user: userWithBalance,
+        user: userWithoutPass,
         token,
       });
     } catch (error) {

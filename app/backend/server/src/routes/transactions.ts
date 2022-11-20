@@ -86,7 +86,7 @@ async function transactionRoutes(fastify: FastifyInstance) {
 
       await prisma.account.update({
         where: {
-          userId: creditedUser.id,
+          id: creditedAccount.id,
         },
         data: {
           balance: newBalance(+creditedAccount.balance, value, 'plus'),
@@ -95,10 +95,10 @@ async function transactionRoutes(fastify: FastifyInstance) {
 
       await prisma.account.update({
         where: {
-          userId: debitedUser.id,
+          id: debitedAccount.id,
         },
         data: {
-          balance: newBalance(+creditedAccount.balance, value, 'minus'),
+          balance: newBalance(+debitedAccount.balance, value, 'minus'),
         },
       });
 
