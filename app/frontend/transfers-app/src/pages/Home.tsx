@@ -24,7 +24,7 @@ export const transfersMock: TransferItemProps[] = [
   },
 ];
 
-interface UserData {
+export interface UserData {
   user: {
     id: number,
     username: string,
@@ -91,6 +91,7 @@ export default function Home() {
   React.useEffect(() => {
     loadUserTransactions();
     loadUserBalance();
+    setTransferDone(false);
   }, [transferDone]);
 
   return (

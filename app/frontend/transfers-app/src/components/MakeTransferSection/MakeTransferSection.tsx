@@ -1,5 +1,5 @@
 import React from 'react';
-import { getUserData } from '../../pages/Home';
+import { getUserData, UserData } from '../../pages/Home';
 import transactionsService from '../../services/transactions';
 import { InputOnChange } from '../../types';
 import Button from '../Button/Button';
@@ -35,6 +35,14 @@ interface MakeTransferSectionProps {
   userBalance: number,
 }
 
+interface HandleAxiosError {
+  response: {
+    data: {
+      message: string
+    }
+  }
+}
+
 export default function MakeTransferSection(
   {
     setTransferDone, userBalance,
@@ -46,7 +54,6 @@ export default function MakeTransferSection(
   const handleClose = () => {
     setShowMakeTransfer(false);
     setFeedbackMessage('');
-    setTransferDone(false);
   };
 
   const formatValueInput = (value: string) => {
@@ -84,6 +91,12 @@ export default function MakeTransferSection(
       setFeedbackMessage('Insira um nome de usuário válido!');
       return false;
     }
+    const { user } = getUserData() as UserData;
+
+    if (username === user.username) {
+      setFeedbackMessage('Não é possível realizar transferências para a própria conta!');
+      return false;
+    }
     return true;
   };
 
@@ -99,26 +112,30 @@ export default function MakeTransferSection(
   const doTransfer = async (
     { inputTransferValue, inputTransferUsername }: {[field: string]: string},
   ) => {
-    const valid = validateTransfer(inputTransferValue, inputTransferUsername);
+    try {
+      const valid = validateTransfer(inputTransferValue, inputTransferUsername);
 
-    if (valid) {
-      const transferValue = formatValueInput(inputTransferValue);
+      if (valid) {
+        const transferValue = formatValueInput(inputTransferValue);
 
-      const userData = getUserData();
+        const userData = getUserData();
 
-      if (userData) {
-        const { user: { username }, token } = userData;
-        const headers = { Authorization: token };
+        if (userData) {
+          const { user: { username }, token } = userData;
+          const headers = { Authorization: token };
 
-        transactionsService.postTransaction(
-          username,
-          inputTransferUsername,
-          { value: transferValue },
-          { headers },
-        );
+          await transactionsService.postTransaction(
+            username,
+            inputTransferUsername,
+            { value: transferValue },
+            { headers },
+          );
+          setFeedbackMessage('Transferência realizada com sucesso!');
+          setTransferDone(true);
+        }
       }
-      setFeedbackMessage('Transferência realizada com sucesso!');
-      setTransferDone(true);
+    } catch (error) {
+      setFeedbackMessage((error as HandleAxiosError).response.data.message);
     }
   };
 
