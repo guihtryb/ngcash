@@ -13,14 +13,14 @@ interface UserResponse {
 
 async function userRoutes(fastify: FastifyInstance) {
   fastify.post('/users', async (request, reply) => {
-    const createUserParms = z.object({
+    const createUserBody = z.object({
       username: z.string().min(3, 'Nome de usuário deve ter no mínimo 3 caracteres'),
       password: z.string()
         .regex(/^(?=.*\d)(?=.*[A-Z])[0-9a-zA-Z$*&@#]{8,}$/, 'Senha deve conter 1 número, 1 letra maiúscula e 8 caracteres'),
     });
 
     try {
-      const { username, password } = createUserParms.parse(request.body);
+      const { username, password } = createUserBody.parse(request.body);
 
       const userAlreadyExists: UserResponse | null = await prisma.user.findUnique({
         where: {
@@ -30,7 +30,7 @@ async function userRoutes(fastify: FastifyInstance) {
 
       if (userAlreadyExists) {
         return reply.status(400).send({
-          message: 'Nome de usário já em uso',
+          message: 'Nome de usuário já em uso',
         });
       }
 

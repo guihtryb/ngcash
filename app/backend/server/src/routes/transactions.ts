@@ -62,7 +62,7 @@ async function transactionRoutes(fastify: FastifyInstance) {
 
       if (!creditedUser) {
         return reply.status(404).send({
-          message: 'Nenhum usuário com este username',
+          message: 'Nenhum usuário com este com este nome encontrado.',
         });
       }
 
