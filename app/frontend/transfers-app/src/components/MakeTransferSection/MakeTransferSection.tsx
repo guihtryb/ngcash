@@ -35,7 +35,7 @@ interface MakeTransferSectionProps {
   userBalance: number,
 }
 
-interface HandleAxiosError {
+export interface HandleAxiosError {
   response: {
     data: {
       message: string

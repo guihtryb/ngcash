@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Form from '../../components/Form';
+import { HandleAxiosError } from '../../components/MakeTransferSection/MakeTransferSection';
 import loginService from '../../services/login';
 import { InputOnChange } from '../../types';
 import passwordValidation from '../../utils/validations';
@@ -61,7 +62,7 @@ export default function Login() {
         navigate('/home');
       }
     } catch (error) {
-      setFeedbackMessage('Erro interno, tente novamente mais tarde!');
+      setFeedbackMessage((error as HandleAxiosError).response.data.message);
     }
   };
 
