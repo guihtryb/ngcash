@@ -1,5 +1,6 @@
 /* eslint-disable import/no-unresolved */
 import Fastify from 'fastify';
+import cors from '@fastify/cors';
 import accountRoutes from './routes/account';
 import loginRoutes from './routes/login';
 import transactionRoutes from './routes/transactions';
@@ -9,6 +10,8 @@ async function start() {
   const fastify = Fastify({
     logger: true,
   });
+
+  fastify.register(cors, { origin: true });
 
   await fastify.register(userRoutes);
 

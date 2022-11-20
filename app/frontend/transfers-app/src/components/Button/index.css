@@ -8,3 +8,7 @@ button {
   cursor: pointer;
   min-width: 6rem;
 }
+
+button:hover {
+  background: linear-gradient(45deg, var(--color-yellow-1), var(--color-yellow-0));
+}

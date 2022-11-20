@@ -1,9 +1,9 @@
 import React from 'react';
-import { transfersMock } from '../../pages/Home';
+import { getUserData, UserData } from '../../pages/Home';
+import transactionsService from '../../services/transactions';
 import { InputOnChange } from '../../types';
 import Button from '../Button/Button';
 import Form from '../Form';
-import { TransferItemProps } from '../TransferItem';
 
 import './index.css';
 
@@ -32,12 +32,21 @@ const transferInputs = [
 
 interface MakeTransferSectionProps {
   setTransferDone: React.Dispatch<React.SetStateAction<boolean>>,
-  setUserBalance: React.Dispatch<React.SetStateAction<number>>,
   userBalance: number,
 }
 
+export interface HandleAxiosError {
+  response: {
+    data: {
+      message: string
+    }
+  }
+}
+
 export default function MakeTransferSection(
-  { setTransferDone, setUserBalance, userBalance }: MakeTransferSectionProps,
+  {
+    setTransferDone, userBalance,
+  }: MakeTransferSectionProps,
 ) {
   const [showMakeTransfer, setShowMakeTransfer] = React.useState(false);
   const [feedbackMessage, setFeedbackMessage] = React.useState('');
@@ -45,7 +54,6 @@ export default function MakeTransferSection(
   const handleClose = () => {
     setShowMakeTransfer(false);
     setFeedbackMessage('');
-    setTransferDone(false);
   };
 
   const formatValueInput = (value: string) => {
@@ -67,7 +75,7 @@ export default function MakeTransferSection(
     const formatedValue = formatValueInput(transferValue);
 
     if (formatedValue > userBalance) {
-      setFeedbackMessage('Você não possui saldo suficiente');
+      setFeedbackMessage('Você não possui saldo suficiente!');
       return false;
     }
 
@@ -83,6 +91,12 @@ export default function MakeTransferSection(
       setFeedbackMessage('Insira um nome de usuário válido!');
       return false;
     }
+    const { user } = getUserData() as UserData;
+
+    if (username === user.username) {
+      setFeedbackMessage('Não é possível realizar transferências para a própria conta!');
+      return false;
+    }
     return true;
   };
 
@@ -95,32 +109,33 @@ export default function MakeTransferSection(
     return validValue && validateUsername;
   };
 
-  const doTransfer = ({ inputTransferValue, inputTransferUsername }: {[field: string]: string}) => {
-    const now = new Date();
-    const [day, month, year] = [now.getDate(), now.getMonth() + 1, now.getFullYear()];
+  const doTransfer = async (
+    { inputTransferValue, inputTransferUsername }: {[field: string]: string},
+  ) => {
+    try {
+      const valid = validateTransfer(inputTransferValue, inputTransferUsername);
 
-    const valid = validateTransfer(inputTransferValue, inputTransferUsername);
+      if (valid) {
+        const transferValue = formatValueInput(inputTransferValue);
 
-    if (!valid) {
-      setTransferDone(false);
-    } else {
-      const transferValue = formatValueInput(inputTransferValue);
+        const userData = getUserData();
 
-      const transfer: TransferItemProps = {
-        id: transfersMock.length,
-        creditedAccount: inputTransferUsername,
-        debitedAccount: 'currentUser',
-        createdAt: `${day}/${month}/${year}`,
-        value: transferValue,
-      };
+        if (userData) {
+          const { user: { username }, token } = userData;
+          const headers = { Authorization: token };
 
-      const updatedBalance = ((userBalance * 100) - (transferValue * 100)) / 100;
-
-      setUserBalance(updatedBalance);
-
-      transfersMock.push(transfer);
-      setFeedbackMessage('Transferência realizada com sucesso!');
-      setTransferDone(true);
+          await transactionsService.postTransaction(
+            username,
+            inputTransferUsername,
+            { value: transferValue },
+            { headers },
+          );
+          setFeedbackMessage('Transferência realizada com sucesso!');
+          setTransferDone(true);
+        }
+      }
+    } catch (error) {
+      setFeedbackMessage((error as HandleAxiosError).response.data.message);
     }
   };
 

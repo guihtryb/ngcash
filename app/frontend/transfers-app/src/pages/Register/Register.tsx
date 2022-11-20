@@ -1,6 +1,9 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Form from '../../components/Form';
+import { HandleAxiosError } from '../../components/MakeTransferSection/MakeTransferSection';
+import loginService from '../../services/login';
+import userService from '../../services/users';
 import { InputOnChange } from '../../types';
 import passwordValidation from '../../utils/validations';
 
@@ -35,14 +38,16 @@ export default function register() {
 
   const validateRegister = (username: string, password: string): boolean => {
     if (!username || username.length < 3) {
-      setFeedbackMessage('Insira um username válido!');
+      setFeedbackMessage('Nome do usuário deve ter no mínimo 3 caracteres');
       return false;
     }
 
     const validPassword = passwordValidation(password);
 
     if (!validPassword) {
-      setFeedbackMessage('Senha inválida');
+      setFeedbackMessage(
+        'Senha deve conter no mínimo 8 dígitos, tendo ao menos 1 número e 1 letra maiúscula.',
+      );
       return false;
     }
 
@@ -52,7 +57,19 @@ export default function register() {
   const doRegister = async (username: string, password: string) => {
     const valid: boolean = validateRegister(username, password);
 
-    if (valid) navigate('/home');
+    try {
+      if (valid) {
+        await userService.createUser({ username, password });
+
+        const userLogin = await loginService.login({ username, password });
+
+        localStorage.setItem('user', JSON.stringify(userLogin));
+
+        navigate('/home');
+      }
+    } catch (error) {
+      setFeedbackMessage((error as HandleAxiosError).response.data.message);
+    }
   };
 
   const handleSubmit = (e: React.FormEvent, formsData: {[field: string]: string}) => {
@@ -64,7 +81,7 @@ export default function register() {
 
   return (
     <main className="page">
-      <div className=" register">
+      <div className="register">
         <h1 className="title">Registrar</h1>
         <Form
           testId="form-register"

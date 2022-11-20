@@ -62,7 +62,7 @@ async function transactionRoutes(fastify: FastifyInstance) {
 
       if (!creditedUser) {
         return reply.status(404).send({
-          message: 'Nenhum usuário com este username',
+          message: 'Nenhum usuário com este com este nome encontrado.',
         });
       }
 
@@ -86,7 +86,7 @@ async function transactionRoutes(fastify: FastifyInstance) {
 
       await prisma.account.update({
         where: {
-          userId: creditedUser.id,
+          id: creditedAccount.id,
         },
         data: {
           balance: newBalance(+creditedAccount.balance, value, 'plus'),
@@ -95,10 +95,10 @@ async function transactionRoutes(fastify: FastifyInstance) {
 
       await prisma.account.update({
         where: {
-          userId: debitedUser.id,
+          id: debitedAccount.id,
         },
         data: {
-          balance: newBalance(+creditedAccount.balance, value, 'minus'),
+          balance: newBalance(+debitedAccount.balance, value, 'minus'),
         },
       });
 
@@ -152,9 +152,47 @@ async function transactionRoutes(fastify: FastifyInstance) {
             },
           ],
         },
+        include: {
+          cashInAccount: {
+            select: {
+              user: {
+                select: {
+                  username: true,
+                },
+              },
+            },
+          },
+          cashOutAccount: {
+            select: {
+              user: {
+                select: {
+                  username: true,
+                },
+              },
+            },
+          },
+        },
       });
 
-      return reply.status(200).send({ transactions });
+      const transactionsReply = transactions.map((transaction) => {
+        const day = transaction.createdAt.getDate();
+        const month = transaction.createdAt.getMonth() + 1;
+        const year = transaction.createdAt.getFullYear();
+
+        const dateFormated = `${day}/${month}/${year}`;
+
+        const transactionFormated = {
+          cashInAccount: transaction.cashInAccount.user.username,
+          cashOutAccount: transaction.cashOutAccount.user.username,
+          createdAt: dateFormated,
+          id: transaction.id,
+          value: +transaction.value,
+        };
+
+        return transactionFormated;
+      });
+
+      return reply.status(200).send({ transactions: transactionsReply });
     } catch (error) {
       if (error instanceof z.ZodError) {
         return reply.status(400).send({

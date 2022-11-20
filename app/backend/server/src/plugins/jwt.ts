@@ -12,7 +12,7 @@ const createToken = (userData: IUserTokenData) => jwt.sign(
   { data: userData },
   secret,
   {
-    expiresIn: '1d',
+    expiresIn: '24h',
     algorithm: 'HS256',
   },
 );

@@ -15,7 +15,8 @@
   background-color: var(--color-black-0);
   padding: 2rem 1.5rem;
   border-radius: 0.5rem;
-  min-width: 350px;
+  width: 300px;
+  min-height: 340px;
   box-shadow: 0 0 10px 10px rgba(0, 0, 0, 0.4);
   position: relative;
 }

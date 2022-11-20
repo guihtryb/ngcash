@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Form from '../../components/Form';
+import { HandleAxiosError } from '../../components/MakeTransferSection/MakeTransferSection';
+import loginService from '../../services/login';
 import { InputOnChange } from '../../types';
 import passwordValidation from '../../utils/validations';
 
@@ -31,6 +33,7 @@ const loginInputs = [
 
 export default function Login() {
   const [feedbackMessage, setFeedbackMessage] = React.useState('');
+
   const navigate = useNavigate();
 
   const validateLogin = (username: string, password: string): boolean => {
@@ -50,9 +53,17 @@ export default function Login() {
   };
 
   const doLogin = async (username: string, password: string) => {
-    const valid: boolean = validateLogin(username, password);
+    try {
+      const valid: boolean = validateLogin(username, password);
 
-    if (valid) navigate('/home');
+      if (valid) {
+        const userLogin = await loginService.login({ username, password });
+        localStorage.setItem('user', JSON.stringify(userLogin));
+        navigate('/home');
+      }
+    } catch (error) {
+      setFeedbackMessage((error as HandleAxiosError).response.data.message);
+    }
   };
 
   const handleSubmit = (e: React.FormEvent, formsData: {[field: string]: string}) => {

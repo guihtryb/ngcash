@@ -24,7 +24,7 @@ html, body {
   --color-white-0: #FFF;
   --color-white-1: #D6D6D6;
   --color-yellow-0: #FFD100;
-  --color-yellow-1: #FFEE32;
+  --color-yellow-1: #FFF900;
 }
 
 h1, h2, h3 {
@@ -90,7 +90,7 @@ p {
 }
 
 table {
-  padding: 0.5rem 0;
+  padding: 0.5rem;
   color: var(--color-white-0);
   font-family: var(--type-primary);
   width: 100%;
@@ -137,5 +137,6 @@ td {
 }
 
 .sub {
+  margin: 0 auto;
   text-align: center;
 }

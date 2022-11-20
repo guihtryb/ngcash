@@ -1,20 +1,20 @@
 /* eslint-disable import/no-unresolved */
-import { Account } from '@prisma/client';
 import { FastifyInstance } from 'fastify';
 import { z } from 'zod';
 import prisma from '../lib/prisma';
 import { compare } from '../plugins/bcrypt';
 import { createToken } from '../plugins/jwt';
+import exclude from '../utils/exclude';
 
 async function loginRoutes(fastify: FastifyInstance) {
   fastify.post('/login', async (request, reply) => {
-    const createLoginParms = z.object({
-      username: z.string(),
-      password: z.string(),
+    const createLoginBody = z.object({
+      username: z.string().min(3, 'Nome de usuário deve ter no mínimo 3 caracteres'),
+      password: z.string().regex(/^(?=.*\d)(?=.*[A-Z])[0-9a-zA-Z$*&@#]{8,}$/, 'Senha deve conter 1 número, 1 letra maiúscula e 8 caracteres'),
     });
 
     try {
-      const { username, password } = createLoginParms.parse(request.body);
+      const { username, password } = createLoginBody.parse(request.body);
 
       const user = await prisma.user.findUnique({
         where: {
@@ -28,7 +28,10 @@ async function loginRoutes(fastify: FastifyInstance) {
         });
       }
 
-      const passwordMatch = compare(password, user.password as string);
+      const passwordMatch = await compare(
+        password,
+        user.password as string,
+      );
 
       if (!passwordMatch) {
         return reply.status(400).send({
@@ -36,21 +39,12 @@ async function loginRoutes(fastify: FastifyInstance) {
         });
       }
 
-      const account = await prisma.account.findUnique({
-        where: {
-          userId: user.id,
-        },
-      }) as Account;
-
-      const userWithBalance = {
-        ...user,
-        balance: account.balance,
-      };
+      const userWithoutPass = exclude(user, ['password']);
 
       const token = createToken(user);
 
       return reply.status(200).send({
-        user: userWithBalance,
+        user: userWithoutPass,
         token,
       });
     } catch (error) {
