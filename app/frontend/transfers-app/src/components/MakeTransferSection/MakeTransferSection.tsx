@@ -1,9 +1,9 @@
 import React from 'react';
-import { transfersMock } from '../../pages/Home';
+import { getUserData } from '../../pages/Home';
+import transactionsService from '../../services/transactions';
 import { InputOnChange } from '../../types';
 import Button from '../Button/Button';
 import Form from '../Form';
-import { TransferItemProps } from '../TransferItem';
 
 import './index.css';
 
@@ -32,12 +32,13 @@ const transferInputs = [
 
 interface MakeTransferSectionProps {
   setTransferDone: React.Dispatch<React.SetStateAction<boolean>>,
-  setUserBalance: React.Dispatch<React.SetStateAction<number>>,
   userBalance: number,
 }
 
 export default function MakeTransferSection(
-  { setTransferDone, setUserBalance, userBalance }: MakeTransferSectionProps,
+  {
+    setTransferDone, userBalance,
+  }: MakeTransferSectionProps,
 ) {
   const [showMakeTransfer, setShowMakeTransfer] = React.useState(false);
   const [feedbackMessage, setFeedbackMessage] = React.useState('');
@@ -67,7 +68,7 @@ export default function MakeTransferSection(
     const formatedValue = formatValueInput(transferValue);
 
     if (formatedValue > userBalance) {
-      setFeedbackMessage('Você não possui saldo suficiente');
+      setFeedbackMessage('Você não possui saldo suficiente!');
       return false;
     }
 
@@ -95,30 +96,27 @@ export default function MakeTransferSection(
     return validValue && validateUsername;
   };
 
-  const doTransfer = ({ inputTransferValue, inputTransferUsername }: {[field: string]: string}) => {
-    const now = new Date();
-    const [day, month, year] = [now.getDate(), now.getMonth() + 1, now.getFullYear()];
-
+  const doTransfer = async (
+    { inputTransferValue, inputTransferUsername }: {[field: string]: string},
+  ) => {
     const valid = validateTransfer(inputTransferValue, inputTransferUsername);
 
-    if (!valid) {
-      setTransferDone(false);
-    } else {
+    if (valid) {
       const transferValue = formatValueInput(inputTransferValue);
 
-      const transfer: TransferItemProps = {
-        id: transfersMock.length,
-        creditedAccount: inputTransferUsername,
-        debitedAccount: 'currentUser',
-        createdAt: `${day}/${month}/${year}`,
-        value: transferValue,
-      };
+      const userData = getUserData();
 
-      const updatedBalance = ((userBalance * 100) - (transferValue * 100)) / 100;
+      if (userData) {
+        const { user: { username }, token } = userData;
+        const headers = { Authorization: token };
 
-      setUserBalance(updatedBalance);
-
-      transfersMock.push(transfer);
+        transactionsService.postTransaction(
+          username,
+          inputTransferUsername,
+          { value: transferValue },
+          { headers },
+        );
+      }
       setFeedbackMessage('Transferência realizada com sucesso!');
       setTransferDone(true);
     }

@@ -4,7 +4,8 @@ import Header from '../components/Header/Header';
 import MakeTransferSection from '../components/MakeTransferSection/MakeTransferSection';
 import { TransferItemProps } from '../components/TransferItem';
 import UserTransfersSection from '../components/UserTransfersSection/UserTransfersSection';
-import transactionsService from '../services/transactions';
+import accountService from '../services/accounts';
+import transactionService from '../services/transactions';
 
 export const transfersMock: TransferItemProps[] = [
   {
@@ -33,23 +34,22 @@ interface UserData {
   token: string,
 }
 
+export const getUserData = () => {
+  const userData = localStorage.getItem('user');
+
+  if (userData === null) {
+    return false;
+  }
+
+  return JSON.parse(userData) as UserData;
+};
+
 export default function Home() {
   const navigate = useNavigate();
-
   const [usernameText, setUsernameText] = React.useState('');
   const [userBalance, setUserBalance] = React.useState(0.0);
   const [userTransfers, setUserTransfers] = React.useState([] as TransferItemProps[]);
   const [transferDone, setTransferDone] = React.useState(false);
-
-  const getUserData = () => {
-    const userData = localStorage.getItem('user');
-
-    if (userData === null) {
-      return false;
-    }
-
-    return JSON.parse(userData) as UserData;
-  };
 
   const loadUserTransactions = async () => {
     const userData = getUserData();
@@ -57,8 +57,19 @@ export default function Home() {
     if (userData) {
       const { user: { accountId }, token } = userData;
       const headers = { Authorization: token };
-      const { transactions } = await transactionsService.getTransactions(accountId, { headers });
+      const { transactions } = await transactionService.getTransactions(accountId, { headers });
       setUserTransfers(transactions);
+    }
+  };
+
+  const loadUserBalance = async () => {
+    const userData = getUserData();
+
+    if (userData) {
+      const { user: { accountId }, token } = userData;
+      const headers = { Authorization: token };
+      const { balance } = await accountService.getAccountBalance(accountId, { headers });
+      setUserBalance(balance);
     }
   };
 
@@ -71,10 +82,16 @@ export default function Home() {
       setUserBalance(+balance);
       setUsernameText(username);
       loadUserTransactions();
+      loadUserBalance();
     } else {
       navigate('/login');
     }
   }, []);
+
+  React.useEffect(() => {
+    loadUserTransactions();
+    loadUserBalance();
+  }, [transferDone]);
 
   return (
     <div>
@@ -85,7 +102,6 @@ export default function Home() {
           <MakeTransferSection
             setTransferDone={setTransferDone}
             userBalance={userBalance}
-            setUserBalance={setUserBalance}
           />
           {
           userTransfers && <UserTransfersSection transfers={userTransfers} />

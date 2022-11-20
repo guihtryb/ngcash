@@ -6,6 +6,15 @@ export const basicPostRequisition = (baseUrl: string, route: string, data: objec
   .post(`${baseUrl}${route}`, data)
   .then((res) => res.data);
 
+export const PostRequisitionWithHeaders = (
+  baseUrl: string,
+  route: string,
+  data: object,
+  headers: object,
+) => axios
+  .post(`${baseUrl}${route}`, data, headers)
+  .then((res) => res.data);
+
 export const basicGetRequisition = (baseUrl: string, route: string, headers: object) => axios
   .get(`${baseUrl}${route}`, headers)
   .then((res) => res.data);
