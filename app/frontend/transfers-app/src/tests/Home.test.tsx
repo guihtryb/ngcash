@@ -53,7 +53,7 @@ describe('Home page', () => {
       { wrapper: MemoryRouter },
     );
 
-    const inputTransfersFilter = screen.getByTestId('input-transfers-filter');
+    const inputTransfersFilter = screen.getByTestId('input-transfers-filter-by-date');
     const transfers = screen.getByTestId('transfers');
 
     expect(transfers.children).toHaveLength(2);

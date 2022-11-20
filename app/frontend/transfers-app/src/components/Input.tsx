@@ -7,12 +7,13 @@ export interface InputProps {
   id: string;
   placeholder: string;
   testId: string;
-  value: number | string;
+  value?: number | string,
+  checked?: boolean,
   onChange(e: ChangeEvent): void;
 }
 
 export default function Input({
-  labelText, type, name, id, placeholder, testId, onChange, value,
+  labelText, type, name, id, placeholder, testId, onChange, value, checked,
 }: InputProps) {
   return (
     <label htmlFor={name}>
@@ -25,6 +26,7 @@ export default function Input({
         data-testid={testId}
         onChange={onChange}
         value={value}
+        checked={checked}
       />
     </label>
 
@@ -33,4 +35,6 @@ export default function Input({
 
 Input.defaultProps = {
   labelText: '',
+  value: '',
+  checked: false,
 };

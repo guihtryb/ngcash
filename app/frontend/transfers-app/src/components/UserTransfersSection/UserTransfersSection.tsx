@@ -1,4 +1,5 @@
 import React from 'react';
+import { getUserData, UserData } from '../../pages/Home';
 import Input from '../Input';
 import TransferItem, { TransferItemProps } from '../TransferItem';
 
@@ -9,16 +10,35 @@ interface UserTransfersSectionProps {
 }
 
 export default function UserTransfersSection({ transfers }: UserTransfersSectionProps) {
-  const [filterByDate, setFilterByDate] = React.useState('');
+  const [transactionsFilter, setTransactionsFilter] = React.useState({
+    filterByDate: '',
+    filterByCashIn: false,
+    filterByCashOut: false,
+  });
 
   const handleChange = ({ target }: React.ChangeEvent<HTMLInputElement>) => {
-    setFilterByDate(target.value);
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    setTransactionsFilter({ ...transactionsFilter, [target.name]: value });
   };
 
   const handleFilter = (data: TransferItemProps[]) => {
-    if (filterByDate) {
-      return data
-        .map((transferItem) => transferItem.createdAt.includes(filterByDate) && (
+    const { user: { username } } = getUserData() as UserData;
+
+    const filteredByDate = data.filter(
+      (transferItem) => transferItem.createdAt.includes(transactionsFilter.filterByDate),
+    );
+
+    const filteredByCashIn = filteredByDate.filter(
+      (transferItem) => transferItem.cashInAccount === username,
+    );
+
+    const filteredByCashOut = filteredByDate.filter(
+      (transferItem) => transferItem.cashOutAccount === username,
+    );
+
+    if (transactionsFilter.filterByCashOut && transactionsFilter.filterByCashIn) {
+      return filteredByDate
+        .map((transferItem) => (
           <TransferItem
             key={transferItem.id}
             id={transferItem.id}
@@ -30,7 +50,35 @@ export default function UserTransfersSection({ transfers }: UserTransfersSection
         ));
     }
 
-    return data.map((transferItem) => transferItem.createdAt.includes(filterByDate) && (
+    if (transactionsFilter.filterByCashIn) {
+      return filteredByCashIn
+        .map((transferItem) => (
+          <TransferItem
+            key={transferItem.id}
+            id={transferItem.id}
+            cashInAccount={transferItem.cashInAccount}
+            cashOutAccount={transferItem.cashOutAccount}
+            value={transferItem.value}
+            createdAt={transferItem.createdAt}
+          />
+        ));
+    }
+
+    if (transactionsFilter.filterByCashOut) {
+      return filteredByCashOut
+        .map((transferItem) => (
+          <TransferItem
+            key={transferItem.id}
+            id={transferItem.id}
+            cashInAccount={transferItem.cashInAccount}
+            cashOutAccount={transferItem.cashOutAccount}
+            value={transferItem.value}
+            createdAt={transferItem.createdAt}
+          />
+        ));
+    }
+
+    return filteredByDate.map((transferItem) => (
       <TransferItem
         key={transferItem.id}
         id={transferItem.id}
@@ -45,16 +93,38 @@ export default function UserTransfersSection({ transfers }: UserTransfersSection
   return (
     <section className="section transfers">
       <h1 className="title">Suas transferências</h1>
-      <Input
-        id="input-transfers-filter"
-        name="input-transfers-filter"
-        placeholder="20/09/2022"
-        testId="input-transfers-filter"
-        type="text"
-        onChange={handleChange}
-        value={filterByDate}
-        labelText="Filtrar transferência por data"
-      />
+      <div className="filters">
+        <Input
+          id="input-transfers-filter-by-date"
+          name="filterByDate"
+          placeholder="20/09/2022"
+          testId="input-transfers-filter-by-date"
+          type="text"
+          onChange={handleChange}
+          value={transactionsFilter.filterByDate}
+          labelText="Filtrar transferência por data"
+        />
+        <Input
+          id="input-transfers-filter-by-cash-in"
+          name="filterByCashIn"
+          placeholder="20/09/2022"
+          testId="input-transfers-filter-by-cash-in"
+          type="checkbox"
+          onChange={handleChange}
+          checked={transactionsFilter.filterByCashIn}
+          labelText="Cash In"
+        />
+        <Input
+          id="input-transfers-filter-by-cash-out"
+          name="filterByCashOut"
+          placeholder="20/09/2022"
+          testId="input-transfers-filter-by-cash-out"
+          type="checkbox"
+          onChange={handleChange}
+          checked={transactionsFilter.filterByCashOut}
+          labelText="Cash Out"
+        />
+      </div>
       <table data-testid="table-transfers">
         <thead>
           <tr>
