@@ -28,7 +28,10 @@ async function loginRoutes(fastify: FastifyInstance) {
         });
       }
 
-      const passwordMatch = await compare(password, user.password as string);
+      const passwordMatch = await compare(
+        password,
+        user.password as string,
+      );
 
       if (!passwordMatch) {
         return reply.status(400).send({

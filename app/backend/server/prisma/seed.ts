@@ -7,7 +7,7 @@ async function main() {
     data: {
       id: 1,
       username: 'JhonDoe',
-      password: 'Secret01',
+      password: '$2a$12$tSn.ijlirFPx3BtXMAI.jOUTonMpgu5FMtQazMrxf8lX/PexXbi/K',
       accountId: 1,
     },
   });
@@ -16,7 +16,7 @@ async function main() {
     data: {
       id: 2,
       username: 'JhonHendrix',
-      password: 'Secret02',
+      password: '$2a$12$d6LBXEPG0SFzbIHMYSxM0.0/CgvUzyMoicVARjRboQ9hs.HmMIg1O',
       accountId: 2,
     },
   });
