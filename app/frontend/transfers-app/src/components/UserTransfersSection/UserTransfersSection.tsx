@@ -22,8 +22,8 @@ export default function UserTransfersSection({ transfers }: UserTransfersSection
           <TransferItem
             key={transferItem.id}
             id={transferItem.id}
-            creditedAccount={transferItem.creditedAccount}
-            debitedAccount={transferItem.debitedAccount}
+            cashInAccount={transferItem.cashInAccount}
+            cashOutAccount={transferItem.cashOutAccount}
             value={transferItem.value}
             createdAt={transferItem.createdAt}
           />
@@ -34,8 +34,8 @@ export default function UserTransfersSection({ transfers }: UserTransfersSection
       <TransferItem
         key={transferItem.id}
         id={transferItem.id}
-        creditedAccount={transferItem.creditedAccount}
-        debitedAccount={transferItem.debitedAccount}
+        cashInAccount={transferItem.cashInAccount}
+        cashOutAccount={transferItem.cashOutAccount}
         value={transferItem.value}
         createdAt={transferItem.createdAt}
       />
@@ -70,7 +70,7 @@ export default function UserTransfersSection({ transfers }: UserTransfersSection
           { transfers.length ? handleFilter(transfers) : null }
         </tbody>
       </table>
-      { !transfers.length && (<p>Você ainda não possui transferências!</p>) }
+      { !transfers.length && (<p className="sub">Você ainda não possui transferências!</p>) }
     </section>
   );
 }

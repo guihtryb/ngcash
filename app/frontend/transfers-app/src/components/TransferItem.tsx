@@ -1,21 +1,21 @@
 import React from 'react';
 
 export interface TransferItemProps {
-  id: number,
-  debitedAccount: string,
-  creditedAccount: string,
-  value: number,
+  cashInAccount: string,
+  cashOutAccount: string,
   createdAt: string,
+  id: number,
+  value: number,
 }
 
 export default function TransferItem({
-  id, debitedAccount, creditedAccount, value, createdAt,
+  id, cashOutAccount, cashInAccount, value, createdAt,
 }: TransferItemProps) {
   return (
     <tr>
       <td>{id}</td>
-      <td>{debitedAccount}</td>
-      <td>{creditedAccount}</td>
+      <td>{cashOutAccount}</td>
+      <td>{cashInAccount}</td>
       <td>{value}</td>
       <td>{createdAt}</td>
     </tr>

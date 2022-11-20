@@ -7,4 +7,9 @@ button {
   font-weight: 700;
   cursor: pointer;
   min-width: 6rem;
+  transition: all ease 0.2s;
+}
+
+button:hover {
+  background-color: var(--color-yellow-1);
 }
