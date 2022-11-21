@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Form from '../../components/Form';
-import { HandleAxiosError } from '../../components/MakeTransferSection/MakeTransferSection';
+import { HandleAxiosError } from '../../interfaces';
 import loginService from '../../services/login';
 import { InputOnChange } from '../../types';
 import passwordValidation from '../../utils/validations';
