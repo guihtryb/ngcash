@@ -1,0 +1,47 @@
+version: '2.4'
+services:
+  frontend:
+    build: ./frontend/transfers-app
+    ports:
+      - "5173:5173"
+    # depends_on:
+    #   backend:
+    #     condition: service_healthy
+    # Garantir que a aplicação está operacional, antes de liberar o container
+    healthcheck:
+      test: ["CMD", "lsof", "-t", "-i:5173"]
+      timeout: 10s
+      retries: 5
+  backend:
+    build: ./backend/server
+    container_name: app_backend
+    ports:
+      - "3000:3000"
+    # depends_on:
+    #   db:
+    #     condition: service_healthy
+    environment:
+      - PORT=3000
+      - DB_USER=postgres
+      - DB_PASS=TravelerW23
+      - DB_HOST=localhost
+      - DB_NAME=transfers
+      - DB_PORT=5432
+    # healthcheck:
+    #   test: ["CMD", "lsof", "-t", "-i:3000"]
+    #   timeout: 10s
+    #   retries: 5
+  db:
+    image: postgres:latest
+    container_name: db
+    ports:
+      - 5430:5432
+    environment:
+      - POSTGRES_PASSWORD=TravelerW23
+    restart: 'always'
+    # healthcheck:
+    #   test: ["CMD", "postgresadmin" ,"ping", "-h", "localhost"] # Aguarda o banco ficar operacional
+    #   timeout: 10s
+    #   retries: 5
+    cap_add:
+      - SYS_NICE # Omitir alertas menores
