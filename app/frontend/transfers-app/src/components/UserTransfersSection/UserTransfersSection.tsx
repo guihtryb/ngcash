@@ -1,5 +1,6 @@
 import React from 'react';
-import { getUserData, UserData } from '../../pages/Home';
+import { UserData } from '../../interfaces';
+import getUserData from '../../utils/user';
 import Input from '../Input';
 import TransferItem, { TransferItemProps } from '../TransferItem';
 

@@ -27,6 +27,7 @@
   right: 1rem;
   top: 1rem;
   padding: 4px;
+  z-index: 101;
 }
 
 .modal > p {

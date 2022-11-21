@@ -6,6 +6,7 @@ import { TransferItemProps } from '../components/TransferItem';
 import UserTransfersSection from '../components/UserTransfersSection/UserTransfersSection';
 import accountService from '../services/accounts';
 import transactionService from '../services/transactions';
+import getUserData from '../utils/user';
 
 export const transfersMock: TransferItemProps[] = [
   {
@@ -23,26 +24,6 @@ export const transfersMock: TransferItemProps[] = [
     createdAt: '20/09/2022',
   },
 ];
-
-export interface UserData {
-  user: {
-    id: number,
-    username: string,
-    accountId: number,
-    balance: string,
-  }
-  token: string,
-}
-
-export const getUserData = () => {
-  const userData = localStorage.getItem('user');
-
-  if (userData === null) {
-    return false;
-  }
-
-  return JSON.parse(userData) as UserData;
-};
 
 export default function Home() {
   const navigate = useNavigate();

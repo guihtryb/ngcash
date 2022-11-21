@@ -1,7 +1,8 @@
 import React from 'react';
-import { getUserData, UserData } from '../../pages/Home';
+import { HandleAxiosError, UserData } from '../../interfaces';
 import transactionsService from '../../services/transactions';
 import { InputOnChange } from '../../types';
+import getUserData from '../../utils/user';
 import Button from '../Button/Button';
 import Form from '../Form';
 
@@ -33,14 +34,6 @@ const transferInputs = [
 interface MakeTransferSectionProps {
   setTransferDone: React.Dispatch<React.SetStateAction<boolean>>,
   userBalance: number,
-}
-
-export interface HandleAxiosError {
-  response: {
-    data: {
-      message: string
-    }
-  }
 }
 
 export default function MakeTransferSection(
