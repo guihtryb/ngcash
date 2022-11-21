@@ -1,13 +1,17 @@
-FROM node:16-alpine
+FROM node:16
 
 WORKDIR /app
 
-COPY package.json ./
+COPY package*.json .
 
-RUN yarn
+RUN npm i -g prisma
+
+RUN npm install
 
 COPY . .
 
-EXPOSE 3001
+RUN npm install
 
-ENTRYPOINT [ "yarn", "dev" ]
+EXPOSE 3000
+
+ENTRYPOINT [ "npm", "run", "dev" ]

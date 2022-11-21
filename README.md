@@ -36,7 +36,7 @@
 
   ### Backend
   
-  1. Entre na pasta app/backend/server e execute o comando ```npx prisma migrate reset``` para criar e popular o Banco de dados;
+  1. Entre na pasta app/backend/server e execute o comando ```npx prisma migrate dev``` para criar e popular o Banco de dados;
   2. Por fim execute o comando ```npm run dev``` para iniciar servidor;
 
   ### Frontend
