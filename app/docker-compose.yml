@@ -1,0 +1,42 @@
+version: '3.1'
+services:
+  database:
+    image: postgres
+    container_name: database
+    environment:
+      - POSTGRES_HOST=localhost
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=TravelerW23
+      - POSTGRES_DB=transfers
+    restart: always
+    ports:
+      - 5432:5432
+  backend:
+    tty: true
+    stdin_open: true
+    image: node:16
+    container_name: backend
+    build: frontend/transfers-app
+    restart: always
+    ports:
+      - 3000:3000
+    environment:
+      - PORT=3000
+      - DB_USER=postgres
+      - DB_PASS=TravelerW23
+      - DB_HOST=localhost
+      - DB_NAME=transfers
+      - DB_PORT=5432
+    depends_on:
+      - "database"
+    command: bash -c "npx prisma generate && npx prisma migrate dev && npm run dev"
+
+  frontend:
+    tty: true
+    stdin_open: true
+    image: node:16
+    container_name: frontend
+    build: frontend/transfers-app
+    depends_on:
+      - database
+    command: bash -c "npm run dev"
