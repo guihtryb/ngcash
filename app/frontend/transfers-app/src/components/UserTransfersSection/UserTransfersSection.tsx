@@ -108,7 +108,7 @@ export default function UserTransfersSection({ transfers }: UserTransfersSection
         <Input
           id="input-transfers-filter-by-cash-in"
           name="filterByCashIn"
-          placeholder="20/09/2022"
+          placeholder="20/9/2022"
           testId="input-transfers-filter-by-cash-in"
           type="checkbox"
           onChange={handleChange}
