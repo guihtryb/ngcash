@@ -38,6 +38,7 @@ async function userRoutes(fastify: FastifyInstance) {
 
       const newUser = await prisma.user.create({
         data: {
+          id: users.length + 1,
           username,
           password: await hash(password, 12),
           accountId: users.length + 1,
@@ -46,6 +47,7 @@ async function userRoutes(fastify: FastifyInstance) {
 
       await prisma.account.create({
         data: {
+          id: newUser.id,
           balance: 100,
           userId: newUser.id,
         },
